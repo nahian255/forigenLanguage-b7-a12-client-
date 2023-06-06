@@ -29,13 +29,23 @@ const Navbar = () => {
         <li><Link to='/'> Home</Link></li>
         <li><Link to='/Instructors'>Instructors</Link></li>
         <li><Link to='/classes'>Classes</Link></li>
-        <li><Link to='/register'> SingUp</Link></li>
+        {/* <li><Link to='/register'> SingUp</Link></li> */}
 
         {
             user ?
                 <>
-                    <button className='mx-2' onClick={hadelSingOut}>Logout</button>
                     {/* profile img div */}
+
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost rounded-btn">Dashboard</label>
+                        <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-full mt-4">
+                            <li><button className='' onClick={hadelSingOut}>Logout</button>
+                            </li>
+                            <li><a>Item 1</a></li>
+                            <li><a>Item 2</a></li>
+                        </ul>
+                    </div>
+
                     <div className="avatar">
                         <div className="w-11 rounded-full">
                             <img src={user.photoURL} />
