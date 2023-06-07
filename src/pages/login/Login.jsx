@@ -21,8 +21,6 @@ const Login = () => {
     const onSubmit = data => {
         const email = data.email
         const pass = data.password
-        console.log(email, pass)
-
         loginUser(email, pass)
             .then(result => {
                 const currentUser = result.user

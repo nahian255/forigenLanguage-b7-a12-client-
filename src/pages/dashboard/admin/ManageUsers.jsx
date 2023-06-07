@@ -16,8 +16,8 @@ const ManageUsers = () => {
         }
     });
 
+    // make admin ...
     const handelAdmin = (id) => {
-        console.log(id);
         axiosSecure.patch(`/users/admin/${id}`)
             .then(data => {
                 console.log(data)
@@ -32,8 +32,28 @@ const ManageUsers = () => {
                     refetch()
                 }
             })
-    }
-    console.log(users);
+    };
+
+    // make instructor ...
+    const handelInstructor = (id) => {
+        axiosSecure.patch(`/users/instructor/${id}`)
+            .then(data => {
+                console.log(data)
+                if (data?.data?.acknowledged) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'instructor create Succesful',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    refetch()
+                }
+            })
+    };
+
+
+
 
     return (
         <>
@@ -63,7 +83,10 @@ const ManageUsers = () => {
                                                     <td>{user.role === 'admin' ? "admin" : <button
                                                         onClick={() => handelAdmin(user?._id)} className="btn  btn-secondary">Make Admin</button>
                                                     }</td>
-                                                    <td><button>Instructors</button></td>
+                                                    <td>{user.role === 'instructor' ? "instructor" : <button
+                                                        onClick={() => handelInstructor(user?._id)} className="btn  btn-secondary">Make Instructor</button>
+                                                    }</td>
+
 
                                                 </tr>
                                             ))

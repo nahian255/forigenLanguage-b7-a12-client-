@@ -13,6 +13,8 @@ import ManageClasses from "../pages/dashboard/admin/ManageClasses";
 import ManageUsers from "../pages/dashboard/admin/ManageUsers";
 import EnrolledClasses from "../pages/dashboard/user/EnrolledClasses";
 import SelectedClasses from "../pages/dashboard/user/SelectedClasses";
+import AddClass from "../pages/dashboard/instructors/AddClass";
+import MyClasses from "../pages/dashboard/instructors/MyClasses";
 
 export const router = createBrowserRouter([
     {
@@ -61,6 +63,14 @@ export const router = createBrowserRouter([
             {
                 path: '/dashboard/enrolled-classes',
                 element: <EnrolledClasses />
+            },
+            {
+                path: '/dashboard/add-class',
+                element: <AddClass />
+            },
+            {
+                path: '/dashboard/my-classes',
+                element: <MyClasses />
             },
         ]
     }
