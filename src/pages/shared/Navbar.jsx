@@ -1,50 +1,24 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../provider/AuthProvider";
-import Swal from "sweetalert2";
 
 const Navbar = () => {
-    const { singOut, user } = useContext(AuthContext)
-
-    console.log(user);
-
-    const hadelSingOut = () => {
-
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'User Singout',
-            showConfirmButton: false,
-            timer: 1500
-        })
-        singOut().then(() => {
-            // Sign-out successful.
-        }).catch(() => {
-            // An error happened.
-        });
-    };
+    const { user } = useContext(AuthContext)
 
 
     const li = <>
         <li><Link to='/'> Home</Link></li>
         <li><Link to='/Instructors'>Instructors</Link></li>
         <li><Link to='/classes'>Classes</Link></li>
+
         {/* <li><Link to='/register'> SingUp</Link></li> */}
 
         {
             user ?
                 <>
                     {/* profile img div */}
+                    <li><Link to='/dashboard'>Dashboard</Link></li>
 
-                    <div className="dropdown dropdown-end">
-                        <label tabIndex={0} className="btn btn-ghost rounded-btn">Dashboard</label>
-                        <ul tabIndex={0} className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-full mt-4">
-                            <li><button className='' onClick={hadelSingOut}>Logout</button>
-                            </li>
-                            <li><a>Item 1</a></li>
-                            <li><a>Item 2</a></li>
-                        </ul>
-                    </div>
 
                     <div className="avatar">
                         <div className="w-11 rounded-full">
@@ -66,7 +40,7 @@ const Navbar = () => {
     </>
     return (
         <>
-            <div className="navbar bg-base-100">
+            <div className="navbar bg-blue-50">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">

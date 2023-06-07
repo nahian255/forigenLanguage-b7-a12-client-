@@ -6,11 +6,13 @@ import { useContext } from "react";
 // import { useState } from "react";
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 import Swal from 'sweetalert2'
+import { saveUser } from "../../api/auth";
+// import { saveUser } from "../../api/auth";
 
 
 const Login = () => {
 
-    const { loginUser } = useContext(AuthContext)
+    const { loginUser, loginWithGoogle } = useContext(AuthContext)
     // const [error, setError] = useState()
     const navigate = useNavigate()
     let from = location.state?.from?.pathname || "/";
@@ -20,23 +22,43 @@ const Login = () => {
         const email = data.email
         const pass = data.password
         console.log(email, pass)
-        Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Login Succesful',
-            showConfirmButton: false,
-            timer: 1500
-        })
+
         loginUser(email, pass)
             .then(result => {
                 const currentUser = result.user
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Login Succesful',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 console.log(currentUser);
+                // saveUser(currentUser)
                 navigate(from, { replace: true })
             })
             .catch(() => {
                 // setError('email and password not match')
             });
     };
+
+    const handelGoogle = () => {
+        loginWithGoogle()
+            .then(result => {
+                const user = result.user;
+                saveUser(user)
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Login Succesful',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                navigate(from, { replace: true })
+                console.log(result);
+            }).catch()
+    };
+
 
     return (
         <div className='flex justify-center items-center min-h-screen'>
@@ -108,10 +130,9 @@ const Login = () => {
                     </p>
                     <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
                 </div>
-                <div className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
+                <div onClick={handelGoogle} className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
                     <FcGoogle size={32} />
-
-                    <p>Continue with Google</p>
+                    <p >Continue with Google</p>
                 </div>
                 <p className='px-6 text-sm text-center text-gray-400'>
                     Don t have an account yet?{' '}

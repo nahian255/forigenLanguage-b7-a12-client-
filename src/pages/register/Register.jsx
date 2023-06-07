@@ -3,26 +3,57 @@ import { FcGoogle } from 'react-icons/fc';
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../provider/AuthProvider";
 import { useContext } from "react";
+import Swal from "sweetalert2";
+import { saveUser } from "../../api/auth";
 
 const Register = () => {
 
-    const { createUser } = useContext(AuthContext)
+    const { createUser, loginWithGoogle } = useContext(AuthContext)
     const navigate = useNavigate()
+
+    let from = location.state?.from?.pathname || "/";
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const onSubmit = data => {
         const email = data.email
         const pass = data.password
         console.log(email, pass)
+
         createUser(email, pass)
             .then((userCredential) => {
                 // Signed in 
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'SingUp Succesful',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 const user = userCredential.user;
                 console.log(user);
+                saveUser(user)
                 navigate('/')
                 // ...
             })
 
+    };
+
+    // login with google
+    const handelGoogle = () => {
+        loginWithGoogle()
+            .then(result => {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Login Succesful',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                const user = result.user;
+                saveUser(user)
+                navigate(from, { replace: true })
+                console.log(result);
+            }).catch()
     };
 
 
@@ -121,9 +152,8 @@ const Register = () => {
                     </p>
                     <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
                 </div>
-                <div className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
+                <div onClick={handelGoogle} className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'>
                     <FcGoogle size={32} />
-
                     <p>Continue with Google</p>
                 </div>
                 <p className='px-6 text-sm text-center text-gray-400'>
