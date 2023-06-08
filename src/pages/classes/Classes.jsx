@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
-import Swal from 'sweetalert2';
+import ClassCard from './ClassCard';
 
 const Classes = () => {
 
     const [axiosSecure] = useAxiosSecure()
 
 
-    const { data: users = [], refetch } = useQuery({
+    const { data: users = [], } = useQuery({
         queryKey: ['approved-classes'],
         queryFn: async () => {
             const res = await axiosSecure.get('/approved-classes')
@@ -18,8 +18,12 @@ const Classes = () => {
     console.log(users);
 
     return (
-        <div>
-            <h1>classesssssssss</h1>
+        <div className='mt-20'>
+            <div className='flex flex-row flex-wrap gap-14'>
+                {
+                    users?.map(user => <ClassCard key={user?._id} user={user}></ClassCard>)
+                }
+            </div>
         </div>
     );
 };

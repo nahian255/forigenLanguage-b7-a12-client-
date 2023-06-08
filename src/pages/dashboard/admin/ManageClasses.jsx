@@ -14,8 +14,7 @@ const ManageClasses = () => {
         }
     });
 
-    console.log(users);
-
+    // aproveted by admin
     const handelAprov = (user) => {
         fetch(`http://localhost:3000/admin-aprove-class`, {
             method: "POST",

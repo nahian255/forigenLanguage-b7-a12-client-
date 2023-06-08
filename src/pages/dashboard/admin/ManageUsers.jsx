@@ -80,9 +80,11 @@ const ManageUsers = () => {
                                                     <th>1</th>
                                                     <td>{user?.name}</td>
                                                     <td>{user?.email}</td>
+
                                                     <td>{user.role === 'admin' ? "admin" : <button
                                                         onClick={() => handelAdmin(user?._id)} className="btn  btn-secondary">Make Admin</button>
                                                     }</td>
+
                                                     <td>{user.role === 'instructor' ? "instructor" : <button
                                                         onClick={() => handelInstructor(user?._id)} className="btn  btn-secondary">Make Instructor</button>
                                                     }</td>
