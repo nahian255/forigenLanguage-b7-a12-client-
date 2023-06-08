@@ -7,8 +7,8 @@ import Swal from "sweetalert2";
 const AddClass = () => {
 
     const { user } = useContext(AuthContext)
-    const userName = user.displayName;
-    const usrEmail = user.email
+    const userName = user?.displayName;
+    const usrEmail = user?.email
     console.log(userName, usrEmail);
 
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -18,7 +18,8 @@ const AddClass = () => {
             instructorName: userName,
             instructorEmail: usrEmail
         }
-        console.log(classInfo)
+        console.log(classInfo, data)
+
         fetch(`http://localhost:3000/insturctor-class`, {
             method: "POST",
             headers: {
@@ -27,7 +28,7 @@ const AddClass = () => {
             body: JSON.stringify(classInfo)
         }).then(res => res.json())
             .then(data => {
-                if (data.acknowledged) {
+                if (data?.acknowledged) {
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -53,15 +54,16 @@ const AddClass = () => {
                         Class Name
                     </label>
                     <input
-                        {...register("class-name", { required: true })}
+                        {...register("className", { required: true })}
                         type="text" placeholder="class name" className="input input-bordered input-warning w-full " />
+                    {errors.exampleRequired && <span>This field is required</span>}
                 </div>
                 <div>
                     <label htmlFor="" className='block mb-2 text-sm'>
                         Class Image
                     </label>
                     <input
-                        {...register("img-url", { required: true })}
+                        {...register("imgUrl", { required: true })}
                         type="text" placeholder="img-url" className="input input-bordered input-warning w-full " />
                 </div>
                 <div className="my-8">
