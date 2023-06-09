@@ -12,7 +12,6 @@ const PopularInst = () => {
         }
     });
     const newUsers = users.slice(0, 6)
-    console.log(newUsers);
 
     return (
         <div>

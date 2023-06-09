@@ -1,7 +1,6 @@
 
 const InstructorCard = ({ item }) => {
 
-    console.log(item);
     const { img, name, gImg, gName, email } = item
     return (
         <div>
