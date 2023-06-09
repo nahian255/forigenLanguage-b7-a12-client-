@@ -1,13 +1,11 @@
-
 import Banner from '../banner/Banner';
+import Other from '../other/Other';
 import PopularClasses from '../popularClass/PopularClasses';
 import PopularInst from '../popularInst/PopularInst';
 import Slider from '../Top slider/Slider';
 
 
 const Home = () => {
-
-
     return (
         <div>
             <Banner></Banner>
@@ -16,7 +14,7 @@ const Home = () => {
             </div>
             <PopularClasses></PopularClasses>
             <PopularInst></PopularInst>
-
+            <Other></Other>
         </div>
     );
 };
