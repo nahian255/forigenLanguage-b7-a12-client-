@@ -15,24 +15,36 @@ const SelectedClasses = () => {
     });
 
     // class delete
-    const handelDelet = id => {
-        fetch(`http://localhost:3000/class-delete/${id}`, {
-            method: "DELETE"
+    const handelDelet = (user) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:3000/class/${user._id}`, {
+                    method: 'DELETE'
+                }).then(res => res.json())
+                    .then(data => {
+                        console.log(data)
+                        if (data.deletedCount > 0) {
+
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    })
+            }
         })
-            .then(data => {
-                // if (data.data.acknowledged) {
-                //     Swal.fire({
-                //         position: 'top-end',
-                //         icon: 'success',
-                //         title: 'Class deleted ',
-                //         showConfirmButton: false,
-                //         timer: 2500
-                //     })
-                // }
-                console.log(data);
-                refetch()
-            })
-    }
+    };
+
+
 
     return (
         <div>
@@ -80,7 +92,7 @@ const SelectedClasses = () => {
                                                             className='btn btn-secondary' >Pay</button>
                                                         </td>
                                                         <td><button
-                                                            onClick={() => handelDelet(user._id)}
+                                                            onClick={() => handelDelet(user)}
                                                             className='btn btn-error'>Delete</button>
                                                         </td>
 

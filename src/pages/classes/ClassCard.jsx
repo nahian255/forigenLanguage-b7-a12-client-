@@ -10,7 +10,7 @@ const ClassCard = ({ user }) => {
 
     // selected a class
     const handelSelectedClass = (user) => {
-        fetch(`http://localhost:3000/selected-class`, {
+        fetch(`http://localhost:3000/class-selected`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
