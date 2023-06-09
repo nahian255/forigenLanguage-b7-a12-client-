@@ -6,7 +6,6 @@ const Classes = () => {
 
     const [axiosSecure] = useAxiosSecure()
 
-
     const { data: users = [], } = useQuery({
         queryKey: ['approved-classes'],
         queryFn: async () => {

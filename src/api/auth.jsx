@@ -2,12 +2,17 @@
 //     const [axiosSecur] = useAxiosSecure
 
 
-export const saveUser = (user) => {
+export const saveUser = (user, name, imgURL) => {
+
+    console.log(user);
 
     const currentUser = {
-        email: user.email
+        email: user.email,
+        gName: user.displayName,
+        gImg: user.photoURL,
+        name: name,
+        img: imgURL,
     }
-    // console.log(user.email);
 
     fetch(`http://localhost:3000/user`, {
         method: "POST",

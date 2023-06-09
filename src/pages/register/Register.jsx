@@ -2,39 +2,62 @@ import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from 'react-icons/fc';
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../provider/AuthProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { saveUser } from "../../api/auth";
+
+const imgToken = import.meta.env.VITE_Img_key;
 
 const Register = () => {
 
     const { createUser, loginWithGoogle } = useContext(AuthContext)
     const navigate = useNavigate()
+    const [err, setErr] = useState('')
 
     let from = location.state?.from?.pathname || "/";
 
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const onSubmit = data => {
-        const email = data.email
-        const pass = data.password
-        console.log(data, data.img[0])
+    const imgHostinUrl = `https://api.imgbb.com/1/upload?key=${imgToken}`
 
-        // createUser(email, pass)
-        //     .then((userCredential) => {
-        //         // Signed in 
-        //         Swal.fire({
-        //             position: 'top-end',
-        //             icon: 'success',
-        //             title: 'SingUp Succesful',
-        //             showConfirmButton: false,
-        //             timer: 1500
-        //         })
-        //         const user = userCredential.user;
-        //         console.log(user);
-        //         saveUser(user)
-        //         navigate('/')
-        //         // ...
-        //     })
+    const onSubmit = data => {
+        const email = data?.email
+        const pass = data?.password
+        const conPass = data?.confirmPassword
+        const name = data?.name
+        console.log(data)
+
+        const formData = new FormData();
+        formData.append('image', data.image[0])
+        fetch(imgHostinUrl, {
+            method: 'POST',
+            body: formData
+        }).then(res => res.json())
+            .then(imgRes => {
+                if (imgRes.success) {
+                    const imgURL = imgRes?.data?.display_url;
+                    // todo.....
+                    // if (!pass == conPass) {
+                    //     return setErr('confirm password not match')
+                    // }
+                    createUser(email, pass)
+                        .then((userCredential) => {
+                            // Signed in 
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'SingUp Succesful',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            const user = userCredential.user;
+                            saveUser(user, name, imgURL)
+                            navigate('/')
+                            // ...
+                        })
+                    console.log(imgURL, email, pass)
+                }
+            })
+
 
     };
 
@@ -75,7 +98,7 @@ const Register = () => {
                                 Name
                             </label>
                             <input
-                                {...register("Name", { required: true })}
+                                {...register("name", { required: true })}
                                 type="text" placeholder=" name"
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
 
@@ -89,7 +112,7 @@ const Register = () => {
                                 Select Image:
                             </label>
                             <input
-                                {...register("img", { required: true })}
+                                {...register("image", { required: true })}
                                 type="file"
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
 
@@ -138,10 +161,10 @@ const Register = () => {
                             </div>
                             <input
                                 {...register("confirmPassword", { required: true })}
-                                type="text" placeholder=" pass again"
+                                type='password' placeholder="Confrim password"
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
                             />
-
+                            <p>{err}</p>
                             {/* {errors.password?.type === 'pattern' && <span className="text-red-400 mt-2">password is required</span>} */}
                         </div>
                     </div>
