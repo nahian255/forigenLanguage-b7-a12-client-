@@ -14,7 +14,7 @@ const MyClasses = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['manage-classes'],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/manage-classes/${user.email}`)
+            const res = await axiosSecure.get(`/manage-classes/${user?.email}`)
             return res.data
         }
     });
@@ -65,16 +65,6 @@ const MyClasses = () => {
                                                         <td>{user?.instructorEmail}</td>
                                                         <td>{user?.data.seats}</td>
                                                         <td>{user?.data.price}</td>
-                                                        <td><button
-                                                            className='btn btn-secondary' onClick={() => handelAprov(user)}>Approved</button></td>
-                                                        {/* <td>{user?.data?.class - name}</td> */}
-                                                        {/* <td>{user.role === 'admin' ? "admin" : <button
-                                                        onClick={() => handelAdmin(user?._id)} className="btn  btn-secondary">Make Admin</button>
-                                                    }</td>
-                                                    <td>{user.role === 'instructor' ? "instructor" : <button
-                                                        onClick={() => handelInstructor(user?._id)} className="btn  btn-secondary">Make Instructor</button>
-                                                    }</td> */}
-
 
                                                     </tr>
                                                 ))

@@ -1,18 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { useContext } from 'react';
+import { AuthContext } from '../../../provider/AuthProvider';
 
 const SelectedClasses = () => {
 
+    const { user } = useContext(AuthContext)
     const [axiosSecure] = useAxiosSecure()
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['class-selected'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/class-selected')
+            const res = await axiosSecure.get(`/class-selected/${user?.email}`)
             return res.data
         }
     });
+
+    // console.log(users);
 
     // class delete
     const handelDelet = (user) => {
@@ -78,16 +83,16 @@ const SelectedClasses = () => {
                                                         <td>
                                                             <div className="avatar">
                                                                 <div className="mask mask-squircle w-12 h-12">
-                                                                    <img src={user?.data.imgUrl
+                                                                    <img src={user?.item?.data?.imgUrl
                                                                     } />
                                                                 </div>
                                                             </div>
                                                         </td>
-                                                        <td>{user?.data.className}</td>
-                                                        <td>{user?.instructorName}</td>
+                                                        <td>{user?.item?.data?.className}</td>
+                                                        <td>{user?.item?.instructorName}</td>
 
-                                                        <td>{user?.data.seats}</td>
-                                                        <td>{user?.data.price}</td>
+                                                        <td>{user?.item?.data?.seats}</td>
+                                                        <td>{user?.item?.data?.price}</td>
                                                         <td><button
                                                             className='btn btn-secondary' >Pay</button>
                                                         </td>

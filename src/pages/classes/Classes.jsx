@@ -21,7 +21,7 @@ const Classes = () => {
         <div className='mt-20'>
             <div className='flex flex-row flex-wrap gap-14'>
                 {
-                    users?.map(user => <ClassCard key={user?._id} user={user}></ClassCard>)
+                    users?.map(item => <ClassCard key={item?._id} item={item}></ClassCard>)
                 }
             </div>
         </div>

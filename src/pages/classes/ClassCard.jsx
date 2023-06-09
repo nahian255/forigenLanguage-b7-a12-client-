@@ -1,21 +1,28 @@
 import Swal from "sweetalert2";
 import useAdmin from "../../hooks/useAdmin";
 import useInstructor from "../../hooks/useInstructor";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";
 
-const ClassCard = ({ user }) => {
+const ClassCard = ({ item }) => {
 
+    const { user } = useContext(AuthContext)
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
-    const { className, imgUrl, seats, price } = user.data
+    const { className, imgUrl, seats, price } = item.data
 
     // selected a class
-    const handelSelectedClass = (user) => {
+    const handelSelectedClass = (item) => {
+        const sentdata = {
+            item: item,
+            userEmail: user.email
+        }
         fetch(`http://localhost:3000/class-selected`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(sentdata)
         }).then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -39,7 +46,7 @@ const ClassCard = ({ user }) => {
                 </figure>
                 <div className="card-body items-center text-center">
                     <h2 className="card-title">{className}</h2>
-                    <h3> Instracturo Name : {user?.instructorName}</h3>
+                    <h3> Instracturo Name : {item?.instructorName}</h3>
                     <h3> Avaliable seats : {seats}</h3>
                     <h3> Price : {price}</h3>
 
@@ -48,7 +55,7 @@ const ClassCard = ({ user }) => {
                         {/* {
                             isAdmin && isInstructor ? <><p>admin</p></> : <> 0</>
                         } */}
-                        <button onClick={() => handelSelectedClass(user)} className="btn btn-primary">Selected Class</button>
+                        <button onClick={() => handelSelectedClass(item)} className="btn btn-primary">Selected Class</button>
                     </div>
                 </div>
             </div>
