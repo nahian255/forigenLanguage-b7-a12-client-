@@ -17,24 +17,24 @@ const Register = () => {
     const onSubmit = data => {
         const email = data.email
         const pass = data.password
-        console.log(email, pass)
+        console.log(data, data.img[0])
 
-        createUser(email, pass)
-            .then((userCredential) => {
-                // Signed in 
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'SingUp Succesful',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-                const user = userCredential.user;
-                console.log(user);
-                saveUser(user)
-                navigate('/')
-                // ...
-            })
+        // createUser(email, pass)
+        //     .then((userCredential) => {
+        //         // Signed in 
+        //         Swal.fire({
+        //             position: 'top-end',
+        //             icon: 'success',
+        //             title: 'SingUp Succesful',
+        //             showConfirmButton: false,
+        //             timer: 1500
+        //         })
+        //         const user = userCredential.user;
+        //         console.log(user);
+        //         saveUser(user)
+        //         navigate('/')
+        //         // ...
+        //     })
 
     };
 
@@ -71,33 +71,30 @@ const Register = () => {
                 >
                     <div className='space-y-4'>
                         <div>
-                            <label htmlFor='email' className='block mb-2 text-sm'>
+                            <label className='block mb-2 text-sm'>
                                 Name
                             </label>
                             <input
-                                // {...register("Name",)}
-                                type='text'
-                                name='name'
-                                placeholder='Enter Your Name Here'
+                                {...register("Name", { required: true })}
+                                type="text" placeholder=" name"
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                                data-temp-mail-org='0'
+
                             />
                         </div>
 
                         {/* Image field */}
 
-                        {/* <div>
-                            <label htmlFor='image' className='block mb-2 text-sm'>
+                        <div>
+                            <label className='block mb-2 text-sm'>
                                 Select Image:
                             </label>
                             <input
-                                required
-                                type='file'
-                                id='image'
-                                name='image'
-                                accept='image/*'
+                                {...register("img", { required: true })}
+                                type="file"
+                                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
+
                             />
-                        </div> */}
+                        </div>
 
                         <div>
                             <label htmlFor='email' className='block mb-2 text-sm'>
@@ -128,6 +125,20 @@ const Register = () => {
                                 name='password'
                                 required
                                 placeholder='*******'
+                                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
+                            />
+
+                            {/* {errors.password?.type === 'pattern' && <span className="text-red-400 mt-2">password is required</span>} */}
+                        </div>
+                        <div>
+                            <div className='flex justify-between'>
+                                <label htmlFor='password' className='text-sm mb-2'>
+                                    Confrim Password
+                                </label>
+                            </div>
+                            <input
+                                {...register("confirmPassword", { required: true })}
+                                type="text" placeholder=" pass again"
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
                             />
 
