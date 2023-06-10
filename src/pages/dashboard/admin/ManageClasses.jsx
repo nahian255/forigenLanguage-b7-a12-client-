@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { useState } from 'react';
 
 
 const ManageClasses = () => {
     const [axiosSecure] = useAxiosSecure()
+    const [disabledButtons, setDisabledButtons] = useState([]);
+
 
     const { data: users = [], refetch } = useQuery({
         queryKey: ['manage-classes'],
@@ -14,8 +17,16 @@ const ManageClasses = () => {
         }
     });
 
+
     // aproveted by admin
-    const handelAprov = (user) => {
+    const handelAprov = (user, index) => {
+        //  btn disable
+        setDisabledButtons((prevDisabledButtons) => {
+            const updatedDisabledButtons = [...prevDisabledButtons];
+            updatedDisabledButtons[index] = true;
+            return updatedDisabledButtons;
+        });
+
         fetch(`https://fress-server.vercel.app/admin-aprove-class`, {
             method: "POST",
             headers: {
@@ -65,7 +76,7 @@ const ManageClasses = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            users?.map(user => (
+                                            users?.map((user, index) => (
                                                 // console.log(user)
                                                 <tr key={user?._id}>
                                                     <th>1</th>
@@ -83,7 +94,9 @@ const ManageClasses = () => {
                                                     <td>{user?.data.seats}</td>
                                                     <td>{user?.data.price}</td>
                                                     <td><button
-                                                        className='btn btn-secondary' onClick={() => handelAprov(user)}>Approved</button></td>
+                                                        className='btn btn-secondary'
+                                                        disabled={disabledButtons[index]}
+                                                        onClick={() => handelAprov(user, index)}>Approved</button></td>
                                                     {/* <td>{user?.data?.class - name}</td> */}
                                                     {/* <td>{user.role === 'admin' ? "admin" : <button
                                                         onClick={() => handelAdmin(user?._id)} className="btn  btn-secondary">Make Admin</button>

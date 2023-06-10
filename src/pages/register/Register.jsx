@@ -5,6 +5,10 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { saveUser } from "../../api/auth";
+import { AiFillEye } from 'react-icons/Ai';
+import { AiTwotoneEyeInvisible } from 'react-icons/Ai';
+
+
 
 const imgToken = import.meta.env.VITE_Img_key;
 
@@ -12,9 +16,13 @@ const Register = () => {
 
     const { createUser, loginWithGoogle } = useContext(AuthContext)
     const navigate = useNavigate()
-    const [err, setErr] = useState('')
-
+    const [passwordVisible, setPasswordVisible] = useState(false);
     let from = location.state?.from?.pathname || "/";
+
+    //password visibility..
+    const togglePasswordVisibility = () => {
+        setPasswordVisible(!passwordVisible);
+    };
 
     const { register, handleSubmit, formState: { errors } } = useForm();
     const imgHostinUrl = `https://api.imgbb.com/1/upload?key=${imgToken}`
@@ -86,7 +94,7 @@ const Register = () => {
                 <div className='mb-8 text-center'>
                     <h1 className='my-3 text-4xl font-bold'>Sign Up</h1>
                     {/* todo : ......... */}
-                    <p className='text-sm text-gray-400'>Welcome to ...........</p>
+                    <p className='text-sm text-gray-400'>Welcome to WorldSpeak Language Safari</p>
                 </div>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -134,24 +142,36 @@ const Register = () => {
                             {errors.email && <span className="text-red-400 mt-2">Email is required</span>}
                         </div>
                         <div>
-                            <div className='flex justify-between'>
-                                <label htmlFor='password' className='text-sm mb-2'>
-                                    Password
-                                </label>
-                            </div>
-                            <input
-                                {...register("password", {
-                                    required: true,
-                                    // pattern: /^[A-Za-z]+$/i
-                                })}
-                                type='password'
-                                name='password'
-                                required
-                                placeholder='*******'
-                                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
-                            />
+                            <div>
+                                <div className='flex justify-between'>
+                                    <label htmlFor='password' className='text-sm mb-2'>
+                                        Password
+                                    </label>
+                                </div>
+                                <input
+                                    {...register("password",
+                                        {
+                                            required: true,
+                                            //     //  minLength: 6,
+                                            // pattern: /(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}/
 
-                            {/* {errors.password?.type === 'pattern' && <span className="text-red-400 mt-2">password is required</span>} */}
+                                        }
+                                    )}
+                                    type={passwordVisible ? 'text' : 'password'}
+                                    name='password'
+
+                                    placeholder='*******'
+                                    className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
+                                />
+                                <button onClick={togglePasswordVisibility}>
+                                    {passwordVisible ? <AiFillEye></AiFillEye> : <AiTwotoneEyeInvisible />}
+                                </button>
+                            </div>
+
+
+                            {errors.password?.type === 'required' && <span className="text-red-400 mt-2">password is required</span>}
+                            {errors.password?.type === 'minLength' && <span className="text-red-400 mt-2">password must be 6 character</span>}
+                            {errors.password?.type === 'pattern' && <span className="text-red-400 mt-2">password must be 6 character,a capital letter,special character,</span>}
                         </div>
                         <div>
                             <div className='flex justify-between'>
@@ -161,11 +181,9 @@ const Register = () => {
                             </div>
                             <input
                                 {...register("confirmPassword", { required: true })}
-                                type='password' placeholder="Confrim password"
+                                type={passwordVisible ? 'text' : 'password'} placeholder="Confrim password"
                                 className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-rose-500 bg-gray-200 text-gray-900'
                             />
-                            <p>{err}</p>
-                            {/* {errors.password?.type === 'pattern' && <span className="text-red-400 mt-2">password is required</span>} */}
                         </div>
                     </div>
 
@@ -173,7 +191,7 @@ const Register = () => {
                         {/* <input type="submit" /> */}
                         <button
                             type='submit'
-                            className='bg-rose-500 w-full rounded-md py-3 text-white'
+                            className='bg-blue-300 w-full rounded-md py-3 text-white'
                         >
                             Continue
                         </button>

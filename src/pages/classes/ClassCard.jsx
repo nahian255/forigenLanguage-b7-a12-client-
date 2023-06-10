@@ -1,18 +1,30 @@
 import Swal from "sweetalert2";
 import useAdmin from "../../hooks/useAdmin";
 import useInstructor from "../../hooks/useInstructor";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 
-const ClassCard = ({ item }) => {
+const ClassCard = ({ item, index }) => {
 
-    const { user } = useContext(AuthContext)
+    const [disabledButtons, setDisabledButtons] = useState([]);
+
+    // btn disable condition..
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
+    const isButtonDisabled = isAdmin || isInstructor;
+
+    const { user } = useContext(AuthContext)
     const { className, imgUrl, seats, price } = item.data
 
     // selected a class
     const handelSelectedClass = (item) => {
+        //  btn disable
+        setDisabledButtons((prevDisabledButtons) => {
+            const updatedDisabledButtons = [...prevDisabledButtons];
+            updatedDisabledButtons[index] = true;
+            return updatedDisabledButtons;
+        });
+
         const sentdata = {
             item: item,
             userEmail: user.email
@@ -49,13 +61,22 @@ const ClassCard = ({ item }) => {
                     <h3> Instracturo Name : {item?.instructorName}</h3>
                     <h3> Avaliable seats : {seats}</h3>
                     <h3> Price : {price}</h3>
-
-                    {/* todo ........ */}
                     <div className="card-actions my-4">
-                        {/* {
-                            isAdmin && isInstructor ? <><p>admin</p></> : <> 0</>
-                        } */}
-                        <button onClick={() => handelSelectedClass(item)} className="btn btn-primary">Selected Class</button>
+                        {
+                            isButtonDisabled ?
+                                <>
+                                    <button
+                                        disabled={isButtonDisabled}
+                                        onClick={() => handelSelectedClass(item)} className="btn btn-primary">Selected Class
+                                    </button>
+                                </> :
+                                <>
+                                    <button
+                                        disabled={disabledButtons[index]}
+                                        onClick={() => handelSelectedClass(item)} className="btn btn-primary">Selected Class
+                                    </button>
+                                </>
+                        }
                     </div>
                 </div>
             </div>

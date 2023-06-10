@@ -24,7 +24,7 @@ const Classes = () => {
             </div>
             <div className='flex flex-row flex-wrap gap-14'>
                 {
-                    users?.map(item => <ClassCard key={item?._id} item={item}></ClassCard>)
+                    users?.map((item, index) => <ClassCard key={item?._id} item={item} index={index}></ClassCard>)
                 }
             </div>
         </div>

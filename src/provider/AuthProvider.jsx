@@ -4,6 +4,7 @@ import app from "../firebase/firebase.config";
 import { useEffect } from "react";
 import { useState } from "react";
 import { GoogleAuthProvider } from "firebase/auth";
+import axios from "axios";
 
 
 export const AuthContext = createContext();
@@ -34,13 +35,28 @@ const AuthProvider = ({ children }) => {
     }
     const singOut = () => {
         setLoading(true)
+        localStorage.removeItem('access-token')
         return signOut(auth)
     };
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setLoading(true)
             setUser(currentUser)
+            if (currentUser) {
+                axios
+                    .post(`https://fress-server.vercel.app/jwt`, {
+                        email: currentUser.email,
+                    })
+                    .then(data => {
+                        console.log(data.data.token)
+                        localStorage.setItem('access-token', data.data.token)
+                        setLoading(false)
+                    })
+            } else {
+                localStorage.removeItem('access-token')
+            }
+            setLoading(false)
+
         });
         return () => {
             return unsubscribe();
