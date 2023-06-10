@@ -50,16 +50,17 @@ const Navbar = () => {
                             {li}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+                    <div className="avatar">
+                        <div className="w-8 rounded-full">
+                            <img src="https://images-platform.99static.com//KGd88P6vZjBapDkCjT_nUuIi72w=/249x246:749x746/fit-in/500x500/99designs-contests-attachments/104/104124/attachment_104124900" />
+                        </div>
+                    </div>
+                    <Link to='/' className="btn btn-ghost normal-case text-xl">WorldSpeak Language Safari</Link>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
                         {li}
                     </ul>
-                </div>
-                <div className="navbar-end">
-                    <Link>another thing</Link>
-                    <a className="btn">Button</a>
                 </div>
             </div>
         </>

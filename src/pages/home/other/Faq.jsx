@@ -43,7 +43,7 @@ const config = {
 const FaqPart = () => {
 
     return (
-        <div>
+        <div >
             <Faq
                 data={data}
                 styles={styles}

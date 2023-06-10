@@ -3,6 +3,7 @@ import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import { useContext } from 'react';
 import { AuthContext } from '../../../provider/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const SelectedClasses = () => {
 
@@ -17,8 +18,6 @@ const SelectedClasses = () => {
         }
     });
 
-    // console.log(users);
-
     // class delete
     const handelDelet = (user) => {
         Swal.fire({
@@ -31,7 +30,7 @@ const SelectedClasses = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:3000/class/${user._id}`, {
+                fetch(`https://fress-server.vercel.app/class/${user._id}`, {
                     method: 'DELETE'
                 }).then(res => res.json())
                     .then(data => {
@@ -93,8 +92,9 @@ const SelectedClasses = () => {
 
                                                         <td>{user?.item?.data?.seats}</td>
                                                         <td>{user?.item?.data?.price}</td>
-                                                        <td><button
-                                                            className='btn btn-secondary' >Pay</button>
+                                                        <td><Link to='/dashboard/payment'>
+                                                            <button
+                                                                className='btn btn-secondary' >Pay</button></Link>
                                                         </td>
                                                         <td><button
                                                             onClick={() => handelDelet(user)}

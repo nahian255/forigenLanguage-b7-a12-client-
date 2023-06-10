@@ -14,7 +14,7 @@ export const saveUser = (user, name, imgURL) => {
         img: imgURL,
     }
 
-    fetch(`http://localhost:3000/user`, {
+    fetch(`https://fress-server.vercel.app/user`, {
         method: "POST",
         headers: {
             "content-type": "application/json",

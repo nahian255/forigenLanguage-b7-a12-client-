@@ -18,6 +18,10 @@ const Classes = () => {
 
     return (
         <div className='mt-20'>
+            <div>
+                <h1 className="text-orange-400 text-4xl my-2 -mt-10 text-center">All Classes Here</h1>
+                <p className='text-center mb-4'> Language classes provide a structured and systematic approach to learning a new language. They follow a curriculum that is designed to gradually introduce and reinforce language skills, including listening, speaking, reading, and writing. This structure helps learners progress in a logical and organized manner.</p>
+            </div>
             <div className='flex flex-row flex-wrap gap-14'>
                 {
                     users?.map(item => <ClassCard key={item?._id} item={item}></ClassCard>)

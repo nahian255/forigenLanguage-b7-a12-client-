@@ -17,7 +17,7 @@ const ClassCard = ({ item }) => {
             item: item,
             userEmail: user.email
         }
-        fetch(`http://localhost:3000/class-selected`, {
+        fetch(`https://fress-server.vercel.app/class-selected`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

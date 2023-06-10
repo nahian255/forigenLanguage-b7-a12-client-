@@ -16,7 +16,7 @@ const ManageClasses = () => {
 
     // aproveted by admin
     const handelAprov = (user) => {
-        fetch(`http://localhost:3000/admin-aprove-class`, {
+        fetch(`https://fress-server.vercel.app/admin-aprove-class`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

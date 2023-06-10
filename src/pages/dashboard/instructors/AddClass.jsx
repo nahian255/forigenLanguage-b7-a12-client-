@@ -20,7 +20,7 @@ const AddClass = () => {
         }
         console.log(classInfo, data)
 
-        fetch(`http://localhost:3000/insturctor-class`, {
+        fetch(`https://fress-server.vercel.app/insturctor-class`, {
             method: "POST",
             headers: {
                 "content-type": "application/json",

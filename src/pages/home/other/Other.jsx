@@ -4,7 +4,7 @@ const Other = () => {
     return (
         <div className="my-20">
             <h1 className="text-orange-400 text-4xl text-center">Recent  Reviews</h1>
-            <div className="flex flex-grow gap-20 mt-8 mb-16">
+            <div className="md:flex gap-20  md:gap-20 mt-8 mb-16">
                 <div className="card w-96 bg-blue-100 text-black">
                     <div className="card-body">
                         <h2 className="card-title">Interactive Spanish Course in Panama City Old Quarter</h2>
