@@ -3,20 +3,24 @@ import Other from '../other/Other';
 import PopularClasses from '../popularClass/PopularClasses';
 import PopularInst from '../popularInst/PopularInst';
 import Slider from '../Top slider/Slider';
-import { useState } from "react";
-import DarkModeToggle from "react-dark-mode-toggle";
+import { useState } from 'react';
+import '../home/darkCss/dark.css'; // Import your CSS file
+
 
 
 const Home = () => {
-    const [isDarkMode, setIsDarkMode] = useState(() => false);
-    return (
-        <div>
-            <DarkModeToggle
-                onChange={setIsDarkMode}
-                checked={isDarkMode}
-                size={80}
-            />
 
+    const [isDarkMode, setDarkMode] = useState(false);
+
+    const toggleMode = () => {
+        setDarkMode(!isDarkMode);
+    };
+
+    return (
+        <div className={isDarkMode ? 'dark-mode' : 'light-mode'}>
+            <button className='bg-orange-100' onClick={toggleMode}>
+                {isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            </button>
             <Banner></Banner>
             <div className='my-24 '>
                 <h1 className="text-orange-400 text-4xl my-2 -mt-10 text-center">The Multilingual Advantage of Foreign language learning</h1>
