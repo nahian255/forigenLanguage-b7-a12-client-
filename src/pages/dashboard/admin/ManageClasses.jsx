@@ -5,10 +5,10 @@ import { useState } from 'react';
 
 
 const ManageClasses = () => {
-    const [axiosSecure] = useAxiosSecure()
     const [disabledButtons, setDisabledButtons] = useState([]);
 
-
+    // query data....
+    const [axiosSecure] = useAxiosSecure()
     const { data: users = [], refetch } = useQuery({
         queryKey: ['manage-classes'],
         queryFn: async () => {

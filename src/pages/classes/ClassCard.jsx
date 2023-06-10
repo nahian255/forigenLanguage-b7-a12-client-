@@ -18,6 +18,9 @@ const ClassCard = ({ item, index }) => {
 
     // selected a class
     const handelSelectedClass = (item) => {
+        if (!user) {
+            return alert('Please login first')
+        }
         //  btn disable
         setDisabledButtons((prevDisabledButtons) => {
             const updatedDisabledButtons = [...prevDisabledButtons];
