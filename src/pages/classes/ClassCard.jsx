@@ -6,15 +6,19 @@ import { AuthContext } from "../../provider/AuthProvider";
 
 const ClassCard = ({ item, index }) => {
 
+    const { user } = useContext(AuthContext)
+    const { className, imgUrl, seats, price } = item.data
     const [disabledButtons, setDisabledButtons] = useState([]);
 
     // btn disable condition..
     const [isAdmin] = useAdmin()
     const [isInstructor] = useInstructor()
-    const isButtonDisabled = isAdmin || isInstructor;
+    const isButtonDisabled = isAdmin || isInstructor || seats == 0;
 
-    const { user } = useContext(AuthContext)
-    const { className, imgUrl, seats, price } = item.data
+    // avalible set when 0 
+    const cardStyle = {
+        backgroundColor: seats == 0 ? 'red' : 'white',
+    };
 
     // selected a class
     const handelSelectedClass = (item) => {
@@ -54,7 +58,7 @@ const ClassCard = ({ item, index }) => {
     };
 
     return (
-        <div>
+        <div style={cardStyle}>
             <div className="card w-96  shadow-xl">
                 <figure className="px-10 pt-10">
                     <img src={imgUrl} alt="Shoes" className="rounded-xl" />
